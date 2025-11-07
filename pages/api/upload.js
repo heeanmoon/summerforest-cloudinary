@@ -1,31 +1,43 @@
 // pages/api/upload.js
-export default async function handler(req, res) {
-  // ✅ CORS 헤더 (동일 출처에서도 OPTIONS가 올 수 있음)
-  res.setHeader('Access-Control-Allow-Origin', '*'); // 필요시 도메인으로 제한
-  res.setHeader('Access-Control-Allow-Methods', 'POST,OPTIONS');
-  res.setHeader('Access-Control-Allow-Headers', 'Content-Type');
+import { v2 as cloudinary } from 'cloudinary';
 
-  // ✅ 프리플라이트(OPTIONS) 허용
+cloudinary.config({
+  cloud_name: process.env.CLOUDINARY_CLOUD_NAME,
+  api_key:    process.env.CLOUDINARY_API_KEY,
+  api_secret: process.env.CLOUDINARY_API_SECRET,
+});
+
+// JSON 본문으로 Base64(dataURL)도 받을 수 있게 사이즈 상향
+export const config = {
+  api: { bodyParser: { sizeLimit: '10mb' } },
+};
+
+export default async function handler(req, res) {
+  // 프리플라이트 허용 (Safari가 종종 OPTIONS 쏨)
   if (req.method === 'OPTIONS') {
+    res.setHeader('Access-Control-Allow-Methods', 'POST, OPTIONS');
+    res.setHeader('Access-Control-Allow-Headers', 'content-type');
     return res.status(200).end();
   }
 
   if (req.method !== 'POST') {
-    return res.status(405).json({ error: 'Method Not Allowed' });
+    return res.status(405).json({ error: 'Method not allowed' });
   }
 
-  // ↓↓↓ 기존 업로드 로직 (FormData -> Cloudinary 업로드) 그대로 유지 ↓↓↓
-  try {
-    // 예시: multipart/form-data 받기
-    // const form = await unstable_parseMultipartFormData(req) ... 등
-    // 또는 req.body에서 imageUrl 사용 등
-    // Cloudinary 업로드 후 public URL 반환
+  const { dataUrl, url } = req.body || {};
+  if (!dataUrl && !url) {
+    return res.status(400).json({ error: 'Provide dataUrl or url' });
+  }
 
-    // 임시 예시 응답
-    return res.status(200).json({ ok: true });
+  try {
+    const result = await cloudinary.uploader.upload(dataUrl || url, {
+      folder: process.env.CLOUDINARY_UPLOAD_FOLDER || 'summerforest',
+    });
+    return res.status(201).json({
+      url: result.secure_url,
+      public_id: result.public_id,
+    });
   } catch (e) {
-    console.error(e);
-    return res.status(500).json({ error: 'Upload failed' });
+    return res.status(500).json({ error: e.message || 'Upload failed' });
   }
 }
-
