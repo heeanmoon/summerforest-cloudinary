@@ -1,30 +1,83 @@
-/* styles/globals.css */
-:root{
-  --bg:#ffffff;
-  --fg:#0e0e0e;
-  --muted: rgba(0,0,0,.55);
-  --border: rgba(0,0,0,.08);
-  --font-sans: -apple-system, BlinkMacSystemFont, "Helvetica Neue",
-               Helvetica, Arial, "Noto Sans KR", "Apple SD Gothic Neo",
-               "Segoe UI", Roboto, "Pretendard", "Malgun Gothic", sans-serif;
-  --ls-tight: 0.005em;
-  --ls-wide:  0.04em;
-  --lh-body:  1.6;
+/* ------------------------------
+   Global Shin-shin Tone
+------------------------------ */
+
+:root {
+  --bg: #e5e5e5;         /* 전체 배경 라이트 그레이 */
+  --fg: #000000;         /* 기본 텍스트 */
+  --accent: #ff3b30;     /* 신신 느낌 밝은 레드 (#ff3b30 애플 레드 계열) */
+
+  --font-main: -apple-system, BlinkMacSystemFont, "Helvetica Neue",
+               "Noto Sans KR", Arial, sans-serif;
+
+  --line: #000000;
 }
-*{ box-sizing:border-box; }
-html,body,#__next{ height:100%; }
-html,body{
-  margin:0; font-family:var(--font-sans);
-  background:var(--bg); color:var(--fg);
-  -webkit-font-smoothing:antialiased; -moz-osx-font-smoothing:grayscale;
-  text-rendering:optimizeLegibility;
+
+/* ------------------------------
+   Reset
+------------------------------ */
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
 }
-a{ color:inherit; }
-hr{ border:0; border-top:1px solid var(--border); }
-.container{ max-width:1200px; margin:0 auto; padding:0 18px; }
-.muted{ color:var(--muted); }
-::selection{ background:#111; color:#fff; }
-img{ -webkit-user-drag:none; }
-::-webkit-scrollbar{ width:10px; height:10px; }
-::-webkit-scrollbar-thumb{ background:rgba(0,0,0,.18); border-radius:10px; }
-::-webkit-scrollbar-track{ background:transparent; }
+
+html,
+body {
+  background: var(--bg);
+  color: var(--fg);
+  font-family: var(--font-main);
+  font-size: 17px;
+  line-height: 1.45;
+  -webkit-font-smoothing: antialiased;
+}
+
+/* ------------------------------
+   Typography
+------------------------------ */
+
+a {
+  color: var(--accent);
+  text-decoration: none;
+}
+
+a:hover {
+  text-decoration: underline;
+}
+
+/* 제목 텍스트 */
+h1, h2, h3, h4, h5 {
+  font-weight: 600;
+  line-height: 1.25;
+}
+
+/* ------------------------------
+   Layout Helpers
+------------------------------ */
+
+.container {
+  width: min(1100px, 90%);
+  margin: 0 auto;
+  padding-top: 80px; /* 헤더 공간 확보 */
+}
+
+/* ------------------------------
+   Shin-Shin style line
+------------------------------ */
+
+hr {
+  border: none;
+  border-bottom: 1.5px solid var(--line);
+  margin: 40px 0;
+}
+
+/* ------------------------------
+   Images
+------------------------------ */
+
+img {
+  max-width: 100%;
+  height: auto;
+  display: block;
+}
