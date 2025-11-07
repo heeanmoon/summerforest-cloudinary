@@ -1,0 +1,1 @@
+export default function handler(req,res){if(req.method!=='POST')return res.status(405).end();const {password}=req.body;const ok=process.env.ADMIN_PASSWORD||'';if(password===ok){return res.status(200).json({token:process.env.ADMIN_TOKEN||'summerforest-token'})}return res.status(401).json({error:'Invalid password'});}

@@ -1,0 +1,2 @@
+import Header from '../components/Header';import Footer from '../components/Footer';
+export default function About(){return(<><Header/><main className="container"><h2>ABOUT</h2><p>브랜드 소개를 적으세요.</p></main><Footer/></>);}

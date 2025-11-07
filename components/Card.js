@@ -1,0 +1,1 @@
+import styles from '../styles/layout.module.css';export default function Card({title,desc,year,image}){return(<article className={styles.card}><img src={image} alt={title} className={styles.cardImg}/><div className={styles.cardMeta}><h3>{title}</h3><p className={styles.year}>{year}</p><p>{desc}</p></div></article>);}

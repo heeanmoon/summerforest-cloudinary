@@ -1,0 +1,2 @@
+import Header from '../components/Header';import Footer from '../components/Footer';import Card from '../components/Card';import {useEffect,useState} from 'react';
+export default function Inventory(){const[projects,setProjects]=useState([]);useEffect(()=>{fetch('/api/projects').then(r=>r.json()).then(setProjects)},[]);return(<><Header/><main className="container"><h2>INVENTORY</h2><div className="grid">{projects.map(p=><Card key={p.id} title={p.title} desc={p.description} year={p.year} image={p.image}/>)}</div></main><Footer/></>);}

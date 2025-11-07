@@ -1,0 +1,2 @@
+import Header from '../components/Header';import Footer from '../components/Footer';
+export default function Home(){return(<><Header/><main className="container"><section><h2>Welcome to SummerForest</h2><p>Portfolio / Inventory site template.</p></section></main><Footer/></>);}

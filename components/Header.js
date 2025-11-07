@@ -1,0 +1,2 @@
+import Link from 'next/link';import styles from '../styles/layout.module.css';
+export default function Header(){return(<header className={styles.header}><div className={styles.container}><h1 className={styles.logo}>SummerForest</h1><nav className={styles.nav}><Link href="/">S/S</Link><Link href="/inventory">INVENTORY</Link><Link href="/about">ABOUT</Link><Link href="/admin">ADMIN</Link></nav></div></header>);}
