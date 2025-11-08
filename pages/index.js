@@ -2,51 +2,89 @@
 import { useEffect, useRef, useState } from "react";
 import Header from "../components/Header";
 
-/* 여기에 네 Cloudinary 이미지 URL로 교체 */
+// 좌/우 컬럼 이미지 목록 (Cloudinary Secure URL)
 const IMAGES_LEFT = [
-  "https://res.cloudinary.com/demo/image/upload/w_2000/sample.jpg",
-  "https://res.cloudinary.com/demo/image/upload/w_2000/park.jpg",
-  "https://res.cloudinary.com/demo/image/upload/w_2000/city.jpg",
+  "https://res.cloudinary.com/delrdongo/image/upload/v1762582565/009_cphedj.jpg",
+  "https://res.cloudinary.com/delrdongo/image/upload/v1762582564/005_plavg1.jpg",
+  "https://res.cloudinary.com/delrdongo/image/upload/v1762582566/010_bhxego.jpg",
+  "https://res.cloudinary.com/delrdongo/image/upload/v1762582564/004_ygpzzj.jpg",
+  "https://res.cloudinary.com/delrdongo/image/upload/v1762582564/008_ilcz8b.jpg",
 ];
+
 const IMAGES_RIGHT = [
-  "https://res.cloudinary.com/demo/image/upload/w_2000/beach.jpg",
-  "https://res.cloudinary.com/demo/image/upload/w_2000/mountain.jpg",
-  "https://res.cloudinary.com/demo/image/upload/w_2000/flower.jpg",
+  "https://res.cloudinary.com/delrdongo/image/upload/v1762582563/002_gg54ai.jpg",
+  "https://res.cloudinary.com/delrdongo/image/upload/v1762582562/001_znmw9m.jpg",
+  "https://res.cloudinary.com/delrdongo/image/upload/v1762508630/summerforest/s3bzcifxfpn4pvoymcym.jpg",
+  "https://res.cloudinary.com/delrdongo/image/upload/v1762582931/012_jtadfm.jpg",
+  "https://res.cloudinary.com/delrdongo/image/upload/v1762582930/011_xo0tb2.jpg",
 ];
 
 export default function Home() {
   const [li, setLi] = useState(0), [ri, setRi] = useState(0);
   const [lOk, setLOk] = useState(false), [rOk, setROk] = useState(false);
+
   const left = IMAGES_LEFT[li % IMAGES_LEFT.length];
   const right = IMAGES_RIGHT[ri % IMAGES_RIGHT.length];
 
   const preL = useRef({}), preR = useRef({});
-  useEffect(()=>{ setLOk(false); const i=new Image(); i.src=left; i.onload=()=>setLOk(true);
-    const nx=(li+1)%IMAGES_LEFT.length; if(!preL.current[nx]){ const n=new Image(); n.src=IMAGES_LEFT[nx]; preL.current[nx]=true; }
-  },[li,left]);
-  useEffect(()=>{ setROk(false); const i=new Image(); i.src=right; i.onload=()=>setROk(true);
-    const nx=(ri+1)%IMAGES_RIGHT.length; if(!preR.current[nx]){ const n=new Image(); n.src=IMAGES_RIGHT[nx]; preR.current[nx]=true; }
-  },[ri,right]);
 
-  const swipe = (side)=>{
-    let sx=0, sy=0, moved=false;
+  useEffect(() => {
+    setLOk(false);
+    const i = new Image();
+    i.src = left;
+    i.onload = () => setLOk(true);
+    const nx = (li + 1) % IMAGES_LEFT.length;
+    if (!preL.current[nx]) {
+      const n = new Image();
+      n.src = IMAGES_LEFT[nx];
+      preL.current[nx] = true;
+    }
+  }, [li, left]);
+
+  useEffect(() => {
+    setROk(false);
+    const i = new Image();
+    i.src = right;
+    i.onload = () => setROk(true);
+    const nx = (ri + 1) % IMAGES_RIGHT.length;
+    if (!preR.current[nx]) {
+      const n = new Image();
+      n.src = IMAGES_RIGHT[nx];
+      preR.current[nx] = true;
+    }
+  }, [ri, right]);
+
+  const swipe = (side) => {
+    let sx = 0, sy = 0, moved = false;
     return {
-      onTouchStart:(e)=>{ const t=e.touches?.[0]; sx=t?.clientX??0; sy=t?.clientY??0; moved=false; },
-      onTouchMove:()=>{ moved=true; },
-      onTouchEnd:(e)=>{ if(!moved) return; const t=e.changedTouches?.[0]; const dx=(t?.clientX??0)-sx; const dy=(t?.clientY??0)-sy;
-        if(Math.abs(dx)>Math.abs(dy)&&Math.abs(dx)>30){ side==="L"?setLi(v=>v+1):setRi(v=>v+1); } },
+      onTouchStart: (e) => {
+        const t = e.touches?.[0];
+        sx = t?.clientX ?? 0;
+        sy = t?.clientY ?? 0;
+        moved = false;
+      },
+      onTouchMove: () => { moved = true; },
+      onTouchEnd: (e) => {
+        if (!moved) return;
+        const t = e.changedTouches?.[0];
+        const dx = (t?.clientX ?? 0) - sx;
+        const dy = (t?.clientY ?? 0) - sy;
+        if (Math.abs(dx) > Math.abs(dy) && Math.abs(dx) > 30) {
+          side === "L" ? setLi(v => v + 1) : setRi(v => v + 1);
+        }
+      },
     };
   };
 
   return (
     <div className="page">
-      <Header/>
+      <Header />
       <section className="split">
-        <div className="pane" onClick={()=>setLi(v=>v+1)} {...swipe("L")}>
-          <img key={left} src={left} alt="" className={`pic ${lOk?"show":""}`} draggable={false}/>
+        <div className="pane" onClick={() => setLi(v => v + 1)} {...swipe("L")}>
+          <img key={left} src={left} alt="" className={`pic ${lOk ? "show" : ""}`} draggable={false} />
         </div>
-        <div className="pane" onClick={()=>setRi(v=>v+1)} {...swipe("R")}>
-          <img key={right} src={right} alt="" className={`pic ${rOk?"show":""}`} draggable={false}/>
+        <div className="pane" onClick={() => setRi(v => v + 1)} {...swipe("R")}>
+          <img key={right} src={right} alt="" className={`pic ${rOk ? "show" : ""}`} draggable={false} />
         </div>
       </section>
       <style jsx>{`
@@ -61,3 +99,4 @@ export default function Home() {
     </div>
   );
 }
+
