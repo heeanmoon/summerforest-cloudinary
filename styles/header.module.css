@@ -1,0 +1,43 @@
+/* 항상 상단 고정, 항상 클릭 가능 */
+.bar{
+  position: fixed;
+  top: 0; left: 0; right: 0;
+  height: var(--header-h, 48px);
+  z-index: 1000;                /* 헤더는 항상 컨텐츠 위 */
+  background: transparent;      /* 투명 */
+  -webkit-user-select: none;
+  user-select: none;
+}
+
+/* 네 칸 균등정렬 */
+.grid{
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  height: 100%;
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  align-items: center;
+}
+
+.cell{
+  display: flex;
+  justify-content: center;
+}
+
+/* 메뉴 기본 스타일 */
+.link{
+  text-transform: uppercase;
+  text-decoration: none;
+  font: inherit;                     /* 고딕ai 적용 */
+  color: var(--menu-color, #000);
+  line-height: 1;
+  padding: 0 8px;
+  transition: color .15s ease;
+}
+
+/* hover / active = 빨강 */
+.link:hover,
+.active{
+  color: var(--menu-active, #e2181b);
+}

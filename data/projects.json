@@ -1,16 +1,51 @@
 [
   {
-    "id": 1,
-    "title": "Sample Project One",
-    "description": "첫번째 샘플 프로젝트 설명입니다.",
-    "year": "2025",
-    "image": "https://res.cloudinary.com/demo/image/upload/sample.jpg"
+    "id": "undo-planet",
+    "title": "Undo Planet Bangkok",
+    "kind": "Poster",
+    "year": 2025,
+    "preview": "https://res.cloudinary.com/demo/image/upload/q_auto,f_auto,w_600/sample.jpg",
+    "italic": false,
+    "detail": {
+      "description": "Bangkok poster series. Offset print, 500×700mm.",
+      "images": [
+        "https://res.cloudinary.com/demo/image/upload/q_auto,f_auto,w_900/coffee.jpg",
+        "https://res.cloudinary.com/demo/image/upload/q_auto,f_auto,w_900/fashion.jpg"
+      ],
+      "related": [
+        {"title": "Undo DMZ Poster", "href": "#"}
+      ]
+    }
   },
   {
-    "id": 2,
-    "title": "titke",
-    "description": "titke",
-    "year": "2025",
-    "image": "https://res.cloudinary.com/delrdongo/image/upload/v1762494321/summerforest/c6tuvsrn4i0lwokisy5v.png"
+    "id": "osang-gwon",
+    "title": "OSANG GWON SCULPTURE CENTER 2/4 Poster",
+    "kind": "Poster",
+    "year": 2025,
+    "detail": {
+      "description": "Campaign creative. 900×1200mm.",
+      "images": ["https://res.cloudinary.com/demo/image/upload/q_auto,f_auto,w_900/balloons.jpg"]
+    }
+  },
+  {
+    "id": "book-time-space",
+    "title": "A Book Moves Forward—Book, Time, Space",
+    "kind": "Book",
+    "year": 2025,
+    "italic": true,
+    "detail": {
+      "description": "Book design, 264pp.",
+      "images": ["https://res.cloudinary.com/demo/image/upload/q_auto,f_auto,w_900/coffee.jpg"]
+    }
+  },
+  {
+    "id": "frieze",
+    "title": "Frieze Seoul 2025 Campaign Creative",
+    "kind": "Identity",
+    "year": 2025,
+    "detail": {
+      "description": "Identity system for Frieze Seoul.",
+      "images": ["https://res.cloudinary.com/demo/image/upload/q_auto,f_auto,w_900/sample.jpg"]
+    }
   }
 ]

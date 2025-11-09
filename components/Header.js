@@ -1,52 +1,36 @@
 // components/Header.js
+import React from "react";
 import Link from "next/link";
 import { useRouter } from "next/router";
+import styles from "../styles/header.module.css";
 
 const NAV = [
   { label: "SUMMERFOREST", href: "/" },
-  { label: "WORK", href: "/work" },
+  { label: "BOOK", href: "/book" },
   { label: "ABOUT", href: "/about" },
-  { label: "STUFF", href: "/summer" }, // 이것저것
+  { label: "S", href: "/s" },
 ];
 
 export default function Header() {
-  const { pathname } = useRouter();
+  const router = useRouter();
 
   return (
-    <>
-      <header className="header">
-        <nav className="menu">
-          {NAV.map((item) => {
-            const active =
-              item.href === "/" ? pathname === "/" : pathname.startsWith(item.href);
-            return (
+    <nav className={styles.bar} aria-label="Primary">
+      <ul className={styles.grid}>
+        {NAV.map((item) => {
+          const active = router.pathname === item.href;
+          return (
+            <li key={item.href} className={styles.cell}>
               <Link
-                key={item.href}
                 href={item.href}
-                className={`link ${active ? "active" : ""}`}
+                className={`${styles.link} ${active ? styles.active : ""}`}
               >
                 {item.label}
               </Link>
-            );
-          })}
-        </nav>
-        <div className="underline" />
-      </header>
-      <div style={{ height: 62 }} />
-      <style jsx>{`
-        .header {
-          position: fixed; inset: 0 0 auto 0; z-index: 1000;
-          background: #e5e5e5; height: 62px; display: flex; flex-direction: column; justify-content: flex-end;
-        }
-        .menu {
-          height: 100%; display: grid; grid-template-columns: repeat(4, 1fr); align-items: center; text-align: center;
-          font-weight: 700; letter-spacing: .06em; font-size: 18px; color: #000; text-transform: uppercase;
-        }
-        .link { text-decoration: none; color: #000; opacity: .9; }
-        .link:hover, .link.active { opacity: 1; }
-        .underline { height: 2px; width: 100%; background: #000; }
-        @media (max-width: 820px){ .menu{ font-size:14px; } }
-      `}</style>
-    </>
+            </li>
+          );
+        })}
+      </ul>
+    </nav>
   );
 }

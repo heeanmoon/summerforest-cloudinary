@@ -1,83 +1,528 @@
-/* ------------------------------
-   Global Shin-shin Tone
------------------------------- */
+@font-face {
+  font-family: 'Gothic A1';
+  src: url('/fonts/GothicA1-Regular.ttf') format('truetype');
+  font-weight: 400; font-style: normal; font-display: swap;
+}
+@font-face {
+  font-family: 'Gothic A1';
+  src: url('/fonts/GothicA1-Medium.ttf') format('truetype');
+  font-weight: 500; font-style: normal; font-display: swap;
+}
+@font-face {
+  font-family: 'Gothic A1';
+  src: url('/fonts/GothicA1-SemiBold.ttf') format('truetype');
+  font-weight: 600; font-style: normal; font-display: swap;
+}
+@font-face {
+  font-family: 'Gothic A1';
+  src: url('/fonts/GothicA1-Bold.ttf') format('truetype');
+  font-weight: 700; font-style: normal; font-display: swap;
+}
+
+
+/* ===== Gothic A1 Webfont ===== */
+@font-face{
+  font-family: 'Gothic A1';
+  src: url('/fonts/GothicA1/GothicA1-Regular.ttf') format('truetype');
+  font-weight: 400; font-style: normal; font-display: swap;
+}
+@font-face{
+  font-family: 'Gothic A1';
+  src: url('/fonts/GothicA1/GothicA1-Medium.ttf') format('truetype');
+  font-weight: 500; font-style: normal; font-display: swap;
+}
+@font-face{
+  font-family: 'Gothic A1';
+  src: url('/fonts/GothicA1/GothicA1-SemiBold.ttf') format('truetype');
+  font-weight: 600; font-style: normal; font-display: swap;
+}
+@font-face{
+  font-family: 'Gothic A1';
+  src: url('/fonts/GothicA1/GothicA1-Bold.ttf') format('truetype');
+  font-weight: 700; font-style: normal; font-display: swap;
+}
+
+/* ===== 공통 토큰(신신과 동일한 감) ===== */
+:root{
+  --inv-font: 'Gothic A1', -apple-system, BlinkMacSystemFont, 'Apple SD Gothic Neo', 'Noto Sans KR', system-ui, Helvetica, Arial, sans-serif;
+  --inv-text: #111;
+  --inv-line: #bebebe;
+  --inv-red : #ff2a2a;
+  --row-h  : 40px;   /* 행 높이 */
+  --pad-x  : 10px;   /* 좌우 패딩 */
+  --pad-y  : 6px;    /* 상하 패딩 */
+}
+html, body{ background:#efefef; font-family:var(--inv-font); color:var(--inv-text); }
+
+/* 헤더와 표가 딱 맞닿게: Header 컴포넌트 컨테이너 여백 제거(있다면) */
+header, .site-header{ margin:0; padding:0; border-bottom:0px solid var(--inv-line); }
+
+/* 메뉴(헤더) 타이포 — 설명과 같은 톤 */
+.nav a, .site-header a{
+  font-size:14px; letter-spacing:.02em; text-decoration:none; color:var(--inv-text);
+}
+.nav .active, .site-header .active{ color:var(--inv-red); }
+
+
+/* styles/globals.css — 폰트/헤더(오버레이)/밑줄금지/Work 전폭 표 */
 
 :root {
-  --bg: #e5e5e5;         /* 전체 배경 라이트 그레이 */
-  --fg: #000000;         /* 기본 텍스트 */
-  --accent: #ff3b30;     /* 신신 느낌 밝은 레드 (#ff3b30 애플 레드 계열) */
-
-  --font-main: -apple-system, BlinkMacSystemFont, "Helvetica Neue",
-               "Noto Sans KR", Arial, sans-serif;
-
-  --line: #000000;
+  --sf-red: #e21b1b;
+  --sf-black: #111;
+  --sf-border: rgba(0,0,0,0.65);
+  --sf-muted: rgba(0,0,0,0.06);
 }
 
-/* ------------------------------
-   Reset
------------------------------- */
-
-* {
-  margin: 0;
-  padding: 0;
-  box-sizing: border-box;
-}
-
-html,
+* { box-sizing: border-box; }
+html, body { height: 100%; }
 body {
-  background: var(--bg);
-  color: var(--fg);
-  font-family: var(--font-main);
-  font-size: 17px;
-  line-height: 1.45;
-  -webkit-font-smoothing: antialiased;
+  margin: 0;
+  color: var(--sf-black);
+  background: #fff;
+  font-family: "Noto Sans KR","Apple SD Gothic Neo",-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Arial,sans-serif;
 }
 
-/* ------------------------------
-   Typography
------------------------------- */
+/* 🔒 전역 링크: 모든 상태에서 절대 밑줄 금지 */
+a, a:link, a:visited, a:hover, a:active, a:focus { text-decoration: none !important; }
+a:focus { outline-offset: 4px; }
 
-a {
-  color: var(--accent);
+/* 🔒 고정 오버레이 헤더(배경이 헤더 뒤까지 덮임) */
+.sf-header{
+  position: fixed; inset: 0 0 auto 0; height: 60px; z-index: 9999;
+  background: transparent; /* 절대 바꾸지 말 것 */
+  display: grid; place-items: center;
+  border-bottom: 1px solid var(--sf-muted);
+}
+.sf-nav{
+  width: min(1400px, 96vw);
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 24px; align-items: center;
+  text-transform: uppercase; letter-spacing: .6px;
+  font-weight: 800; font-size: 16px;
+}
+.sf-nav__item{ justify-self: center; color: var(--sf-black); }
+.sf-nav__item.is-active{ color: var(--sf-red); }
+.sf-nav__item:hover{ opacity: .9; }
+
+/* 페이지 패딩: 헤더 높이만큼 */
+.sf-page{ padding-top: 76px; margin: 0; width: 100vw; }
+
+/* ===== Work 표: 전폭(양쪽 여백 제거) ===== */
+.sf-page--work{ padding-left: 0; padding-right: 0; }
+
+.sf-table{ width: 100%; border-top: 2px solid var(--sf-border); }
+.sf-row{
+  display: grid;
+  grid-template-columns: 2fr 1.2fr .7fr .6fr;
+  align-items: center; width: 100%;
+}
+.sf-row--head{ border-bottom: 2px solid var(--sf-border); padding: 10px 10px; font-weight: 700; }
+.sf-row--body{
+  cursor: pointer; background: transparent; border: 0;
+  padding: 12px 10px; text-align: left;
+  border-bottom: 1px solid var(--sf-border); width: 100%;
+}
+.sf-row--body:hover{ background: #fafafa; }
+.sf-cell{ min-width: 0; }
+.sf-cell--title{ font-weight: 700; }
+.sf-cell--tight{ text-align: right; }
+
+/* 행 클릭 확장 패널 */
+.sf-group{ position: relative; }
+.sf-expand{
+  border-bottom: 1px solid var(--sf-border);
+  background: #f3f3f3;
+  padding: 14px 10px 18px;
+}
+.sf-expand__desc{ margin-bottom: 10px; line-height: 1.5; }
+/* 작은 썸네일 가로 스크롤 (요청: 작은 사이즈) */
+.sf-expand__images{ display: flex; gap: 12px; overflow-x: auto; padding: 4px 0; }
+.sf-expand__images img{
+  height: 140px; width: auto; display: block; flex: 0 0 auto; background: #eee;
+}
+/* 닫기 버튼 */
+.sf-expand__close{
+  position: absolute; left: 6px; top: 50%; transform: translateY(-50%);
+  width: 28px; height: 28px; border-radius: 50%;
+  border: 1px solid var(--sf-border);
+  background: #fff; cursor: pointer; font-size: 18px; line-height: 26px; padding: 0;
+}
+
+/* 모바일 */
+@media (max-width: 760px){
+  .sf-nav{ font-size: 14px; gap: 10px; }
+  .sf-row{ grid-template-columns: 1.6fr 1fr .7fr .6fr; }
+  .sf-expand__images img{ height: 110px; }
+}
+
+/* 원하는 기본 폰트 */
+html, body {
+  margin: 0;
+  font-family: 'YourFont', sans-serif;
+}
+
+/* === header 공통 변수 === */
+:root {
+  --header-h: 56px;      /* 헤더 높이 */
+  --accent: #e60000;     /* 빨강 */
+  --text: #111111;       /* 기본 글자색(검정) */
+}
+
+/* 기본 리셋(필요 최소한) */
+html, body, #__next { height: 100%; }
+* { box-sizing: border-box; }
+body { margin: 0; color: var(--text); }
+
+/* 페이지 본문 여백 기본값(섹션 제목/리스트에 너무 큰 기본 마진이 있으면 줄임) */
+h1,h2,h3,p,ul,ol { margin-block-start: 0.6rem; margin-block-end: 0.6rem; }
+
+/* /styles/globals.css */
+/* ...기존 내용 위/아래 아무 데나 추가해도 됨 */
+:root {
+  --header-h: 56px;  /* 헤더 고정 높이 */
+}
+
+/* === header variables === */
+:root {
+  --header-h: 56px;
+  --menu-color: #000;
+  --menu-active: #e30000;
+  --menu-divider: #e5e5e5;
+}
+
+/* === header / menu variables (append at the end) === */
+:root{
+  --header-h: 56px;
+  --menu-color: #000;
+  --sf-red: #e2211b;
+  --menu-divider: #e5e5e5;
+}
+
+/* 배경(히어로) 이미지가 메뉴를 덮어야 할 때 컨테이너에 주는 헬퍼 (선택사항) */
+.overlay-over-menu {
+  position: relative;
+  z-index: 2; /* header z-index(1)보다 높게 */
+}
+
+/* === [ADD AT BOTTOM] Header variables & fix === */
+:root{
+  --header-h: 56px;      /* 필요하면 숫자만 바꿔 */
+  --sf-text: #000;
+  --sf-red: #e11d2d;
+}
+
+/* 헤더가 투명이라도 페이지가 덜컥거리지 않게, 상단 여백 "없음" */
+html, body { margin: 0; }
+
+/* 어떤 곳에서든 헤더 아래 선/배경이 생기지 않게 강제 제거 */
+.site-header { background: transparent !important; border: 0 !important; box-shadow: none !important; }
+
+/* 페이지 컨테이너가 헤더 높이만큼 인위적 padding-top 넣어둔 경우가 많음 → 전부 제거 */
+#___next, .sf-page, main, .container, .page, .wrap {
+  padding-top: 0 !important;
+  margin-top: 0 !important;
+  border-top: 0 !important;
+}
+
+/* 리스트/히어로 섹션이 맨 위에서 바로 시작하도록 */
+.hero, .cover, .gallery, .work-list, .content-top {
+  margin-top: 0 !important;
+}
+
+/* 링크 기본색 통일 (선택사항: 기존 규칙이 있으면 생략 가능) */
+a { color: inherit; text-decoration: none; }
+a:hover { color: var(--sf-red); }
+
+/* ① 전역 변수 (이미 있으면 값만 확인) */
+:root {
+  --header-h: 56px;
+  --menu-color: #000;
+  --menu-active: #e2211b; /* 원하는 빨강 코드로 */
+}
+
+/* ② 헤더 아래 내용이 겹치지 않게 하는 유틸 클래스
+   - '목록/텍스트' 페이지에서만 사용
+   - 인덱스(배경 꽉 차는 곳)는 쓰지 말 것 */
+.page {
+  padding-top: var(--header-h);
+}
+
+/* ③ 헤더에 줄(보더/섀도우) 들어가게 하는 기존 규칙이 있으면 전부 무력화 */
+header,
+.site-header,
+.sf-row--head,
+.sf-row--body {
+  border: 0 !important;
+  box-shadow: none !important;
+  background: transparent !important; /* 헤더는 항상 투명 */
+}
+
+/* ====== 헤더 공통 변수 (없으면 추가) ====== */
+:root {
+  --header-h: 56px;     /* 헤더 높이 */
+  --menu-color: #000;   /* 기본 메뉴 글자색 */
+}
+
+/* ====== 헤더와 페이지 레이아웃 약속 ====== */
+/* 홈이 아닌 모든 페이지는 첫 콘텐츠가 헤더와 겹치지 않게 위 여백 부여 */
+body:not(.page--home) main {
+  padding-top: var(--header-h);
+}
+
+/* 홈(index)에서는 "배경이 메뉴를 덮도록" 헤더를 뒤로 보내기 */
+body.page--home .site-header {
+  z-index: 1;     /* 배경(사진)이 헤더보다 위 */
+  /* 필요시 테두리/그림자 제거 보장 */
+  box-shadow: none;
+  border: 0;
+}
+
+/* 페이지 어디에도 “헤더 아래 선” 안 나오게 보장 */
+.site-header,
+.site-header * {
+  border: none !important;
+  box-shadow: none !important;
+}
+
+/* styles/globals.css */
+
+/* ===== 공통 변수 (여기는 전역이라 OK) ===== */
+:root{
+  --header-h: 56px;         /* 헤더 높이 한 곳에서 관리 */
+  --menu-color: #000;       /* 기본 검정 */
+  --accent-red: #e2211b;    /* 호버/활성 빨강 */
+}
+
+/* 페이지 래퍼: 기본은 헤더만큼 패딩 줘서 겹침 방지 */
+.page{
+  padding-top: var(--header-h);
+}
+
+/* 홈(/)에서는 오버레이: 패딩 제거 */
+.page--overlay{
+  padding-top: 0;
+}
+
+/* 바디/폰트는 기존 설정 유지 (이미 쓰는 @font-face 등 건드리지 마세요) */
+
+/* ====== HEADER TOKENS ====== */
+:root {
+  --sf-header-h: 56px;        /* 헤더 높이 */
+  --sf-text: #000;            /* 기본 검정 */
+  --sf-red: #e2211b;          /* hover/활성 빨강 */
+}
+
+/* ====== HEADER LAYOUT ====== */
+/* 헤더 자체는 fixed 이지만 배경 위에 가려 보이게 z-index는 낮게 설정 */
+.sf-header {
+  position: fixed;
+  top: 0; left: 0; right: 0;
+  height: var(--sf-header-h);
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);  /* 4칸 균등 정렬 */
+  align-items: center;
+  text-transform: uppercase;              /* 대문자 */
+  font-weight: 700;
+  background: transparent;                /* 배경 없음 */
+  border: 0;                              /* 선 제거 */
+  z-index: 1;                             /* 배경(메인 이미지는 z-index:2로 덮임) */
+}
+
+/* 메뉴 아이템 */
+.sf-header .sf-nav {
+  display: block;
+  text-align: center;
+  padding: 10px 0;
+  color: var(--sf-text);
   text-decoration: none;
 }
-
-a:hover {
-  text-decoration: underline;
+.sf-header .sf-nav:hover,
+.sf-header .sf-nav[aria-current="page"] {
+  color: var(--sf-red);
 }
 
-/* 제목 텍스트 */
-h1, h2, h3, h4, h5 {
-  font-weight: 600;
-  line-height: 1.25;
+/* ====== PAGE-WISE OVERLAP RULES ======
+   - 메인("/")만 배경이 헤더를 '덮어 보이게'
+   - 그 외 페이지는 헤더 높이만큼 여백을 주어 '겹침/클릭 문제' 해결
+*/
+
+/* 모든 페이지 공통: main을 대상 컨테이너로 사용 */
+main { position: relative; }
+
+/* 메인 페이지("/") – 배경이 헤더를 덮어 보이는 연출 유지 */
+body[data-route="/"] main {
+  /* 헤더 위로 올라오게 */
+  position: relative;
+  z-index: 2;
+  margin-top: calc(-1 * var(--sf-header-h)); /* 시각적으로 헤더를 덮어씀 */
+  padding-top: 0;                             /* 위 여백 없음 */
 }
 
-/* ------------------------------
-   Layout Helpers
------------------------------- */
-
-.container {
-  width: min(1100px, 90%);
-  margin: 0 auto;
-  padding-top: 80px; /* 헤더 공간 확보 */
+/* 메인 페이지의 '겹침 클릭 방지': 맨 윗부분은 클릭을 통과시키기 위해 투명 클릭영역 확보 */
+body[data-route="/"] main::before {
+  content: "";
+  position: absolute;
+  top: 0; left: 0; right: 0;
+  height: var(--sf-header-h);
+  /* pointer-events:none 으로 위 스트립은 클릭을 헤더로 통과시킴 */
+  pointer-events: none;
 }
 
-/* ------------------------------
-   Shin-Shin style line
------------------------------- */
-
-hr {
-  border: none;
-  border-bottom: 1.5px solid var(--line);
-  margin: 40px 0;
+/* 그 외 모든 페이지 – 첫 줄이 헤더와 겹치지 않도록 안전 여백 */
+body:not([data-route="/"]) main {
+  padding-top: var(--sf-header-h);
+  margin-top: 0;
 }
 
-/* ------------------------------
-   Images
------------------------------- */
-
-img {
-  max-width: 100%;
-  height: auto;
-  display: block;
+/* 혹시 남아있는 모든 상단 선 제거(테이블/리스트 헤더 등에 습관적으로 준 border) */
+.sf-header,
+table, thead, tr, th, td,
+.hr, hr, .divider,
+.header, .nav, .menu {
+  border: 0 !important;
+  box-shadow: none !important;
 }
+
+/* ====== header & page layout glue (append-only) ====== */
+:root{
+  --header-h: 56px;                 /* 헤더 높이(원하시면 48~64px로만 바꾸세요) */
+  --menu-color: #000;
+  --menu-active: #e2181b;           /* 빨강 */
+}
+
+/* 공통 페이지 wrapper. _app.js에서 자동으로 생성됨 */
+.page{
+  min-height: 100vh;
+  /* 기본값: 내용이 헤더와 겹치지 않게 패딩 확보 */
+  padding-top: var(--header-h);
+}
+
+/* 인덱스('/')에서는 배경을 헤더 뒤까지 올리기 위해 패딩을 0으로 */
+body.page--home .page{
+  padding-top: 0;
+}
+
+/* 헤더가 투명이라 선/그림자 절대 생성 금지(혹시 있을지 모를 리셋) */
+header, nav{ border: 0 !important; box-shadow: none !important; }
+
+:root{
+  --header-h: 48px;      /* 실제 헤더 높이로 맞춰주세요 */
+  --header-gap: 12px;    /* 헤더와 본문 사이 여백 */
+}
+
+/* 헤더는 항상 맨 위에 고정 */
+.site-header{
+  position: fixed;
+  top: 0; left: 0; right: 0;
+  z-index: 1000;
+}
+
+/* 모든 페이지 본문은 헤더 높이만큼 아래에서 시작 */
+.main,
+.page,
+.book-page{  /* Book 페이지 래퍼 클래스에 맞게 하나만 써도 됩니다 */
+  margin-top: calc(var(--header-h) + var(--header-gap));
+}
+
+/* 혹시 테이블/리스트가 헤더 위로 z-index 뜨는 문제 방지 */
+.book-table, .book-list{
+  position: relative;
+  z-index: 1;
+}
+
+:root{
+  --header-h: 48px;   /* 실제 헤더 높이에 맞추세요 */
+  --header-gap: 12px; /* 헤더와 본문 사이 여백 */
+}
+
+:root{
+  --header-h: 48px;    /* 실제 헤더 높이에 맞추세요 */
+  --header-gap: 12px;  /* 헤더와 본문 사이 여백 */
+  --bg: #f3f3f3;       /* 옅은 회색 배경 (shin-shin 느낌) */
+}
+
+/* 메뉴와 본문 폰트/크기 동일화 */
+html, body {
+  font-family: var(--menu-font, -apple-system, BlinkMacSystemFont, "Helvetica Neue",
+                   "Helvetica", "Segoe UI", "Noto Sans KR", system-ui, sans-serif);
+  font-size: var(--menu-size, 14px);
+  font-weight: 400; /* 볼드 금지 */
+  line-height: 1.5;
+  background: var(--bg);
+  color: #111;
+}
+
+:root{
+  --header-h: 48px;     /* 실제 헤더 높이에 맞춰 필요시만 바꾸세요 */
+  --header-gap: 12px;   /* 헤더와 본문 사이 여백 */
+  --bg-soft: #efefef;   /* 옅은 회색(신신 사이트 톤) */
+}
+
+/* 메뉴와 동일한 폰트/크기를 쓰기 위한 클래스(필요하면 폰트패밀리만 조정) */
+.navFont{
+  font-family: ui-sans-serif, -apple-system, "Helvetica Neue", "Helvetica", Arial, "Noto Sans KR", system-ui, sans-serif;
+  font-size: 14px;
+  line-height: 1.3;
+  font-weight: 400;        /* 볼드 금지 */
+}
+
+:root{
+  --bg:#f2f2f2;   /* 페이지/테이블 공통 배경 */
+  --hover:#e20808;/* 마우스오버 빨강 */
+  --line:#000;    /* 테이블 검정 라인 */
+  --lineDetail:#999; /* 펼침영역 경계 회색 */
+}
+
+:root{
+  --bg:#f2f2f2;
+  --hover:#e20808;
+}
+
+/* ===== 전역 변수 & 전역 선택자(모듈 파일에서 쓰지 말 것) ===== */
+:root {
+  --bg: #f2f2f2;     /* 페이지/테이블 공통 배경 회색 */
+  --hover: #e20808;  /* 마우스오버 빨강 */
+  --line: #000;      /* 테이블 기본 경계선(검정) */
+  --lineDetail: #999;/* 상세 패널 경계선(회색) */
+}
+
+/* 텍스트 드래그 선택색 */
+::selection {
+  background: rgba(0,0,0,0.08);
+}
+
+/* 고딕ai 폰트 – public/font 폴더에 파일 있어야 함 */
+@font-face{
+  font-family: 'GothicAI';
+  src: url('/font/gothicai.woff2') format('woff2'),
+       url('/font/gothicai.woff') format('woff');
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+
+/* 모든 페이지 기본 폰트 통일 */
+html, body {
+  font-family: 'GothicAI', system-ui, -apple-system, 'Apple SD Gothic Neo', sans-serif;
+  margin: 0;
+  background: #e9e9e9; /* 인덱스/북 배경 회색 */
+  color: #000;
+}
+
+/* 전역 변수는 "전역 CSS"에만 둔다 (module.css 금지) */
+:root{
+  --header-h: 48px;
+  --menu-color: #000;
+  --menu-active: #e2181b;
+}
+
+@font-face{
+  font-family: "gothicai";
+  src: url("/font/gothicai.woff2") format("woff2");
+  font-display: swap;
+}
+html, body{ font-family: "gothicai", system-ui, sans-serif; }
+
+
+

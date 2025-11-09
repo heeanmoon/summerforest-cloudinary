@@ -1,0 +1,10 @@
+/* styles/global-book.css */
+/* CSS Modules에서 오류 나는 전역 선택자들을 여기로 분리 */
+
+::selection { background: rgba(0,0,0,0.08); }
+
+/* 필요시 추가 전역 규칙을 여기로만 넣으세요 */
+
+/* 인덱스에서만 헤더를 뒤로 보냄 */
+.head-under nav[aria-label="Primary"] { z-index: 0 !important; }
+.head-under main.split { z-index: 10 !important; } /* 사진이 위 */

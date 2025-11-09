@@ -1,0 +1,202 @@
+:root{
+  /* 헤더 높이와 간격: 필요시 여기만 조절 */
+  --header-h: 48px;     /* 실제 헤더 높이에 맞춰 조정 */
+  --header-gap: 12px;   /* 헤더와 본문 사이 여백 */
+}
+
+/* 페이지 바탕색: 옅은 회색 */
+.page {
+  background: #f2f2f2;
+  min-height: 100vh;
+  padding-top: calc(var(--header-h) + var(--header-gap));
+  /* 헤더 아래로 확실히 내리기 */
+}
+
+/* 전체 래퍼: 가운데 정렬 느낌을 유지하되 가로로 넓게 */
+.wrap {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 12px;
+  font-family: inherit;           /* 메뉴 폰트 그대로 상속 */
+  font-size: inherit;             /* 메뉴 폰트 크기 그대로 */
+  font-weight: 400;               /* 볼드 금지 */
+  line-height: 1.6;
+  color: #111;
+}
+
+/* 리스트(테이블 느낌) */
+.list {
+  display: grid;
+  grid-template-columns: 1fr; /* 모바일 1열 */
+  gap: 0;
+}
+
+/* 각 행: 3컬럼 (제목 / 지은이 / 연도) */
+.row {
+  display: grid;
+  grid-template-columns: 1fr 220px 80px;  /* 제목 | 지은이 | 연도 */
+  align-items: center;
+  border-bottom: 1px solid rgba(0,0,0,.12);
+  padding: 10px 8px;
+  cursor: pointer;
+  user-select: none;
+  background: #fff;
+}
+
+.row:hover {
+  background: #eee;
+}
+
+/* 첫 행이 헤더와 겹치지 않게 위쪽 라인 제거용 */
+.row:first-child {
+  border-top: 1px solid rgba(0,0,0,.12);
+}
+
+/* 열 텍스트 */
+.cell {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  font-weight: 400;   /* 볼드 제거 */
+}
+
+/* 펼침(디테일) 영역 */
+.detail {
+  display: grid;
+  grid-template-columns: 1fr 420px; /* 왼쪽 글 / 오른쪽 이미지 */
+  gap: 24px;
+  padding: 24px 8px 40px 8px;
+  background: #f9f9f9;
+  border-left: 1px solid rgba(0,0,0,.08);
+  border-right: 1px solid rgba(0,0,0,.08);
+  border-bottom: 1px solid rgba(0,0,0,.12);
+}
+
+/* 본문 텍스트 박스 */
+.text {
+  white-space: pre-wrap;
+  word-break: keep-all;
+}
+
+/* 이미지 스택(오른쪽) */
+.gallery {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  align-items: flex-start;
+}
+
+/* 원본비율, 자르지 않음 */
+.gallery img {
+  max-width: 100%;
+  height: auto;
+  object-fit: contain;   /* 자르지 않고 비율 유지 */
+  display: block;
+  background: #fff;
+  border: 1px solid rgba(0,0,0,.06);
+}
+
+/* 우측 미리보기(호버) — 화면 오른쪽에 고정 */
+.preview {
+  position: fixed;
+  top: calc(var(--header-h) + var(--header-gap) + 8px);
+  right: 16px;
+  max-width: 28vw;     /* 화면 폭 기준 */
+  z-index: 5;
+  pointer-events: none;
+}
+
+.preview img {
+  width: 100%;
+  height: auto;
+  object-fit: contain;  /* 원본비율 유지 */
+  display: block;
+  background: #fff;
+  border: 1px solid rgba(0,0,0,.1);
+}
+
+/* 좁은 화면 대응 */
+@media (max-width: 980px) {
+  .row {
+    grid-template-columns: 1fr 160px 70px;
+  }
+  .detail {
+    grid-template-columns: 1fr;
+  }
+  .preview { display: none; } /* 모바일에선 고정 미리보기 숨김 */
+}
+
+/* 공통 색상 */
+:root{
+  --line: #808080;         /* 회색 경계선 */
+  --hover-red: #cc0000;    /* 호버 텍스트 빨강 */
+}
+
+/* 표 전체가 페이지 배경을 그대로 쓰도록 */
+.book-table,
+.book-table th,
+.book-table td,
+.book-detail,
+.book-detail * {
+  background-color: transparent !important; /* 배경 = 페이지 배경 */
+}
+
+/* 경계선(목록/디테일 모두) */
+.book-table {
+  width: 100%;
+  border-collapse: collapse;     /* 흰 틈 제거 */
+  border-spacing: 0;             /* 사파리 여백 방지 */
+  table-layout: fixed;
+}
+
+.book-table th,
+.book-table td {
+  border-top: 1px solid var(--line);
+  border-bottom: 1px solid var(--line);
+  padding: 10px 12px;
+  vertical-align: middle;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+/* 첫 행 윗선, 마지막 행 아랫선 확실히 */
+.book-table tr:first-child th,
+.book-table tr:first-child td { border-top: 1px solid var(--line); }
+.book-table tr:last-child  td  { border-bottom: 1px solid var(--line); }
+
+/* 행 hover 시 텍스트 빨강 & 커서 */
+.book-table tbody tr:hover td,
+.book-table tbody tr:hover a {
+  color: var(--hover-red);
+}
+.book-table tbody tr { cursor: pointer; }
+
+/* 디테일 패널(목록 아래 나오는 영역) */
+.book-detail {
+  border: 1px solid var(--line);     /* 흰색 테두리 제거 → 회색 */
+  border-top: none;                   /* 위쪽은 목록 아랫선과 이어지게 */
+  padding: 16px;
+  margin-top: -1px;                   /* 경계선 이중 표기 방지 */
+}
+
+/* 디테일 내부 레이아웃 */
+.book-detail__wrap {
+  display: grid;
+  grid-template-columns: 1fr 260px;   /* 왼쪽 텍스트, 오른쪽 썸네일 */
+  gap: 24px;
+  align-items: start;
+}
+
+.book-detail__summary {
+  line-height: 1.6;
+  word-break: keep-all;
+}
+
+.book-detail__thumb {
+  width: 100%;
+  height: auto;
+  display: block;
+  border: 1px solid var(--line);      /* 썸네일도 동일 톤 */
+}
+

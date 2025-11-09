@@ -1,0 +1,131 @@
+/* 전체 회색 배경 */
+.root {
+  background: #efefef;
+  min-height: 100vh;
+}
+
+/* 상단 고정 메뉴 높이에 맞춰 여백(필요하면 값만 조정) */
+.spacer {
+  height: 64px; /* 사이트 헤더 높이만큼 */
+}
+
+/* 테이블 래퍼 */
+.listWrap {
+  position: relative;
+  width: min(1100px, 92vw);
+  margin: 0 auto;
+  background: #efefef; /* 테이블 안쪽도 회색 */
+}
+
+/* 3열 그리드: 제목 / 저자 / 연도 */
+.rowHead,
+.row {
+  display: grid;
+  grid-template-columns: 1.6fr 1fr 100px;
+  align-items: center;
+  gap: 0;
+  border-top: 1px solid #000;
+}
+
+.rowHead {
+  font-weight: 600;
+  letter-spacing: 0.02em;
+  line-height: 1;
+  padding: 14px 10px 12px;
+  position: sticky;
+  top: 0;               /* 스크롤해도 테이블 헤더는 고정 */
+  z-index: 2;           /* 사이트 상단 메뉴(z-index 더 큼)보다 낮게 */
+  background: #efefef;  /* 회색 유지 */
+}
+
+.row {
+  padding: 16px 10px 14px;
+  cursor: pointer;
+  background: #efefef;
+}
+
+/* 마지막 구분선 */
+.listWrap > .row:last-child {
+  border-bottom: 1px solid #000;
+}
+
+/* 셀 타이포 */
+.titleText {
+  font-size: 16px;
+  line-height: 1.15;
+}
+
+.aboutCell,
+.yearCell {
+  font-size: 14px;
+  text-align: left;
+}
+
+.right {
+  text-align: right;
+}
+
+/* 행 hover 시 전체 글자 빨강 */
+.isHover .titleText,
+.isHover .aboutCell,
+.isHover .yearCell {
+  color: #c40000;
+}
+
+/* 상세 패널: 행 아래 전폭 확장 */
+.detail {
+  grid-column: 1 / -1;
+  display: grid;
+  grid-template-columns: 1fr auto;
+  gap: 24px;
+  padding: 18px 10px 22px;
+  background: #efefef;
+}
+
+.detailBody {
+  white-space: pre-wrap;
+  word-break: keep-all;
+  line-height: 1.4;
+  font-size: 15px;
+}
+
+/* 오른쪽 사진 — 원본 사이즈 유지(스크롤 허용) */
+.detailRight {
+  overflow: auto;      /* 원본이 클 때 스크롤 */
+  max-height: 60vh;    /* 텍스트를 가리지 않도록 살짝 제한 */
+}
+.detailRight img {
+  width: auto !important;
+  height: auto !important;
+  max-width: none !important;
+  max-height: none !important;
+  image-rendering: auto;
+}
+
+/* Hover 썸네일 — 화면 오른쪽에 고정, 항상 원본 사이즈, 클릭 방해 X */
+.preview {
+  position: fixed;
+  right: 24px;
+  top: 20%;
+  z-index: 20;
+  pointer-events: none; /* 상단 메뉴/페이지 클릭 방해하지 않음 */
+}
+.preview img {
+  width: auto !important;
+  height: auto !important;
+  max-width: none !important;
+  max-height: none !important;
+  image-rendering: auto;
+  display: block;
+}
+
+/* 반응형(작은 화면에서 연도 폭 확보) */
+@media (max-width: 720px) {
+  .rowHead,
+  .row {
+    grid-template-columns: 1fr 1fr 72px;
+  }
+  .aboutCell { font-size: 13px; }
+  .yearCell  { font-size: 13px; }
+}
+
